@@ -227,7 +227,7 @@
             top: 30px;
             left: 30px;
             right: 30px;
-            bottom: 100px;
+            bottom: 30px;
             border: 2px solid #D4AF37;
             pointer-events: none;
             z-index: 2;
@@ -494,65 +494,6 @@
             display: none;
         }
 
-        /* Share Section */
-        .share-section {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            text-align: center;
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 3.5s forwards;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        .share-section h3 {
-            color: #E8C547;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 14px;
-            margin: 0 0 8px 0;
-            letter-spacing: 1px;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .share-btn {
-            padding: 7px 14px;
-            border: 2px solid #D4AF37;
-            background: rgba(212, 175, 55, 0.1);
-            color: #E8C547;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-
-        .share-btn:hover {
-            background: rgba(212, 175, 55, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-        }
-
         @media (max-width: 768px) {
             .envelope {
                 width: 180px;
@@ -573,7 +514,7 @@
                 top: 20px;
                 left: 20px;
                 right: 20px;
-                bottom: 90px;
+                bottom: 20px;
             }
 
             .invitation-content {
@@ -631,15 +572,6 @@
 
             .contact-text {
                 font-size: 10px;
-            }
-
-            .share-section h3 {
-                font-size: 12px;
-            }
-
-            .share-btn {
-                font-size: 10px;
-                padding: 6px 12px;
             }
         }
     </style>
@@ -716,16 +648,6 @@
             </div>
 
             <button id="closeBtn" class="close-btn hidden">✕</button>
-
-            <div id="shareSection" class="share-section hidden">
-                <h3>Compartilhe!</h3>
-                <div class="share-buttons">
-                    <button class="share-btn" onclick="shareWhatsApp()">WhatsApp</button>
-                    <button class="share-btn" onclick="shareFacebook()">Facebook</button>
-                    <button class="share-btn" onclick="shareTwitter()">Twitter</button>
-                    <button class="share-btn" onclick="copyLink()">Copiar Link</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -736,7 +658,6 @@
         const envelopeSection = document.querySelector('.envelope-section');
         const invitationContent = document.getElementById('invitationContent');
         const closeBtn = document.getElementById('closeBtn');
-        const shareSection = document.getElementById('shareSection');
 
         let envelopeOpen = false;
         let invitationVisible = false;
@@ -764,7 +685,6 @@
                     envelopeSection.style.display = 'none';
                     invitationContent.classList.add('visible');
                     closeBtn.classList.remove('hidden');
-                    shareSection.classList.remove('hidden');
                     invitationVisible = true;
                     addGoldenGlitter();
                 }, 800);
@@ -778,7 +698,6 @@
         function closeInvitation() {
             invitationContent.classList.remove('visible');
             closeBtn.classList.add('hidden');
-            shareSection.classList.add('hidden');
             envelopeSection.style.display = 'flex';
             envelopeSection.classList.remove('closing');
             envelope.classList.remove('open');
@@ -806,33 +725,6 @@
                     setTimeout(() => glitter.remove(), 1500);
                 }, i * 200);
             }
-        }
-
-        function getInvitationURL() {
-            return window.location.href;
-        }
-
-        function shareWhatsApp() {
-            const text = 'Você foi convidado para a cerimônia de Eliane e Emerson! 🎉';
-            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + getInvitationURL())}`;
-            window.open(url, '_blank');
-        }
-
-        function shareFacebook() {
-            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getInvitationURL())}`;
-            window.open(url, '_blank');
-        }
-
-        function shareTwitter() {
-            const text = 'Acabei de receber um convite para o casamento de Eliane e Emerson! 💍';
-            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(getInvitationURL())}`;
-            window.open(url, '_blank');
-        }
-
-        function copyLink() {
-            navigator.clipboard.writeText(getInvitationURL()).then(() => {
-                alert('Link copiado para a área de transferência!');
-            });
         }
 
         document.addEventListener('keydown', (e) => {
